@@ -27,7 +27,8 @@ body {
   width: 70%;
   height: 70%;
   margin-inline: auto;
-  padding-top: 1.25rem;
+
+  margin-top: 4rem;
 }
 
 [data-element='target'],
@@ -44,7 +45,7 @@ body {
 .wrapper {
   display: grid;
   place-items: center;
-  padding-top: 4rem;
+  padding-top: 2rem;
 }
 
 [data-element='snap-btn'] {
@@ -188,6 +189,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 1rem;
 
   opacity: 0;
   visibility: hidden;
@@ -201,6 +203,7 @@ body {
 }
 
 .hearts-wrapper > strong {
+  margin-top: 2rem;
   font-weight: 700;
   font-size: 3rem;
 }
@@ -214,7 +217,8 @@ body {
 
 #hearts {
   max-width: 600px;
-  max-height: 800px;
+  min-width: calc(375px - 2rem);
+  width: 100%;
 }
 
 /* ********* ANIMATIONS ********* */
