@@ -1,0 +1,255 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --cb-func: cubic-bezier(0.11, 0, 0.5, 0);
+  --animation-speed: 2s;
+  --clr-loader: #ffffff;
+  --loader-size: 124px;
+  --clr-ukraine-flag-top: #0057b7;
+  --clr-ukraine-flag-bottom: #ffd700;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+
+  overflow: hidden;
+}
+
+#container {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 70%;
+  height: 70%;
+  margin-inline: auto;
+  padding-top: 1.25rem;
+}
+
+[data-element='target'],
+.dust {
+  top: 1.25rem;
+  left: 0;
+  position: absolute;
+
+  max-width: 100%;
+  max-height: 100%;
+}
+/* ******* snap button ******** */
+
+.wrapper {
+  display: grid;
+  place-items: center;
+  padding-top: 4rem;
+}
+
+[data-element='snap-btn'] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem;
+  margin-inline: auto;
+  font-weight: 700;
+  font-size: 2rem;
+  border-radius: 16px;
+  border: none;
+  color: #1010104d;
+
+  transition: transform 0.25s ease-in-out;
+}
+
+[data-element='snap-btn']:not(:disabled):hover {
+  transform: scale(1.05) translateY(-10%);
+  cursor: pointer;
+}
+
+/* ********* hidden sound elements ******** */
+[data-element='snap-sound'],
+[data-element='dust-sound'] {
+  appearance: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  z-index: -99999;
+}
+
+.fade-out {
+  animation: animate-fading-out-with-blur var(--animation-speed) var(--cb-func) forwards;
+}
+
+.fade-out-v2 {
+  animation: animate-fading-out 4s var(--cb-func) forwards;
+}
+
+#text {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #a9a9a9;
+
+  z-index: 2;
+}
+
+/* ****** Thanos inifinite gauntlet ********* */
+
+[data-element='inifinite-gauntlet'] {
+  --gauntlet-size: 80px; /* do not change for animation proper work */
+
+  height: var(--gauntlet-size);
+  width: var(--gauntlet-size);
+  background: url('https://www.google.com/logos/fnbx/thanos/thanos_snap.png') 0px 0px;
+}
+
+.gauntlet-hidden {
+  --tr-speed: 500ms;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100%);
+
+  transition: transform var(--tr-speed) linear, opacity var(--tr-speed) linear,
+    visibility var(--tr-speed) linear;
+}
+
+.gauntlet-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.gauntlet-hide-without-slide {
+  opacity: 0;
+}
+
+/* ************* loader and backdrop************* */
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--loader-size);
+  height: var(--loader-size);
+  transform: translate(-50%, -50%);
+}
+
+.loader:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: 'Loading...';
+  color: var(--clr-loader);
+  transform: translate(-20px, 0px);
+}
+
+.loader:after {
+  content: ' ';
+  display: block;
+  width: var(--loader-size);
+  height: var(--loader-size);
+  border-radius: 50%;
+  border: 8px solid var(--clr-loader);
+  border-color: var(--clr-loader) transparent var(--clr-loader) transparent;
+
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+
+  background-color: #000000;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+
+  transition: all 0.25s ease-in;
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ****** hearts img and text ******* */
+.hearts-wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition: opacity 250ms linear, visibility 250ms linear;
+}
+
+.hearts-wrapper.hearts-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hearts-wrapper > strong {
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.hearts-wrapper > strong > :nth-child(1) {
+  color: var(--clr-ukraine-flag-top);
+}
+.hearts-wrapper > strong > :nth-child(2) {
+  color: var(--clr-ukraine-flag-bottom);
+}
+
+#hearts {
+  max-width: 600px;
+  max-height: 800px;
+}
+
+/* ********* ANIMATIONS ********* */
+
+@keyframes animate-fading-out-with-blur {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    filter: blur(1px);
+  }
+  75% {
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(6px);
+    display: none;
+  }
+}
+
+@keyframes animate-fading-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
