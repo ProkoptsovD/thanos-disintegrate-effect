@@ -108,7 +108,7 @@ body {
 
   height: var(--gauntlet-size);
   width: var(--gauntlet-size);
-  background: url('https://www.google.com/logos/fnbx/thanos/thanos_snap.png') 0px 0px;
+  background: url('./assets/images/thanos_time.png') 0px 0px;
 }
 
 .gauntlet-hidden {

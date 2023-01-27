@@ -66,7 +66,7 @@ snapButtonElem.addEventListener('click', handleButtonClick);
 
 function handleButtonClick() {
   const delayedHideAndRemovInfiniteGauntlet = () => {
-    setTimeout(hideAndRemoveInfiniteGauntlet, 2000);
+    setTimeout(hideAndRemoveInfiniteGauntlet, 1000);
   };
 
   snapButtonElem.animate([{ opacity: '1' }, { opacity: '0' }], {
@@ -123,7 +123,7 @@ function turnIntoDust() {
       ANIMATION_DELAY_FACTOR + 10 * index + (7500 + ANIMATION_SPEED_FACTOR * index);
 
     if (canvasesWithParticles.length === index + 1) {
-      dustSoundElem.volume = 0.1;
+      dustSoundElem.volume = 0.2;
 
       setTimeout(() => {
         dustSoundElem.pause();
@@ -143,20 +143,23 @@ function animateInfiniteGauntlet(callback) {
     gauntletSoundElem.currentTime = 0;
   }
 
-  const startPosition = 0;
-  let position = startPosition; //start position for the image slicer
+  let position = 0; //start position for the image slicer
   const fullImgWidth = 3840;
   const diff = 80; //diff as a variable for position offset
-  const interval = 50; //100 ms of interval for the setInterval() Animation
+  const intervalValue = 70; //100 ms of interval for the setInterval() Animation
 
-  gauntletSoundElem.play();
+  gauntletSoundElem.volume = 0.5;
   snapAnimationId = setInterval(() => {
-    const areFingerCrossed = position <= fullImgWidth - position;
+    const areFingerCrossed = position <= fullImgWidth;
 
-    inifiniteGauntletElem.style.backgroundPosition = `-${position}px 0px`;
+    inifiniteGauntletElem.style.backgroundPosition = `${position}px 0px`;
+
+    if (position === diff) {
+      gauntletSoundElem.play();
+    }
 
     if (areFingerCrossed) {
-      position = position + diff;
+      position += diff;
     }
     //we increment the position by 256 each time
     else {
@@ -164,10 +167,10 @@ function animateInfiniteGauntlet(callback) {
       clearInterval(snapAnimationId);
     }
     //reset the position to 256px, once position exceeds 1536px
-  }, interval); //end of setInterval
+  }, intervalValue); //end of setInterval
 }
 
 function hideAndRemoveInfiniteGauntlet() {
   addClassNameTo(inifiniteGauntletElem, 'gauntlet-hide-without-slide');
-  removeElementIn(inifiniteGauntletElem, 600);
+  removeElementIn(inifiniteGauntletElem, 400);
 }
